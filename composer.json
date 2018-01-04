@@ -1,0 +1,13 @@
+{
+    "name": "punktde/behat-database",
+    "description": "Preparing database tables and asserting database state using behat.",
+    "require": {
+        "behat/behat": "*",
+        "phpunit/dbunit": "2.0.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "PunktDe\\Behat\\Database\\": "Classes"
+        }
+    }
+}
