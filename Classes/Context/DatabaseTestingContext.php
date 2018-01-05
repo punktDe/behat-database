@@ -102,6 +102,29 @@ class DatabaseTestingContext implements Context
     }
 
     /**
+     * Run bootstrap commands
+     *
+     * - The bootstrap concept exploits behat's BeforeSuite hook, since this is the first hook to be executed.
+     * - The command pattern guarantees extensibility.
+     *
+     * @BeforeSuite
+     */
+    public static function bootstrap(BeforeSuiteScope $scope)
+    {
+        $databaseTestingContextSettings = ContextSettingsService::extractClassContextSettingsFromScope($scope, get_called_class());
+
+        if (is_array($databaseTestingContextSettings) && array_key_exists('bootstrap', $databaseTestingContextSettings)) {
+            foreach ($databaseTestingContextSettings['bootstrap'] as $settings) {
+                $className = key($settings);
+                if (class_exists($className)) {
+                    $bootstrapCommand = new $className($databaseTestingContextSettings, current($settings)); /** @var \PunktDe\Behat\Database\Command\AbstractCommand $bootstrapCommand */
+                    $bootstrapCommand->execute();
+                }
+            }
+        }
+    }
+
+    /**
      * @return DatabaseManager
      */
     public function getDatabaseManager()
@@ -151,29 +174,6 @@ class DatabaseTestingContext implements Context
         $this->databaseManager->importDumpToDatabase($fullDumpFilePath, $schema);
         if (!in_array($fullDumpFilePath, self::$importedDatabases)) {
             self::$importedDatabases[] = $fullDumpFilePath;
-        }
-    }
-
-    /**
-     * Run bootstrap commands
-     *
-     * - The bootstrap concept exploits behat's BeforeSuite hook, since this is the first hook to be executed.
-     * - The command pattern guarantees extensibility.
-     *
-     * @BeforeSuite
-     */
-    public static function bootstrap(BeforeSuiteScope $scope)
-    {
-        $databaseTestingContextSettings = ContextSettingsService::extractClassContextSettingsFromScope($scope, get_called_class());
-
-        if (is_array($databaseTestingContextSettings) && array_key_exists('bootstrap', $databaseTestingContextSettings)) {
-            foreach ($databaseTestingContextSettings['bootstrap'] as $settings) {
-                $className = key($settings);
-                if (class_exists($className)) {
-                    $bootstrapCommand = new $className($databaseTestingContextSettings, current($settings)); /** @var \PunktDe\Behat\Database\Command\AbstractCommand $bootstrapCommand */
-                    $bootstrapCommand->execute();
-                }
-            }
         }
     }
 
