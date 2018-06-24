@@ -7,6 +7,12 @@ namespace PunktDe\Behat\Database;
  */
 
 use Behat\Testwork\Suite\Exception\SuiteConfigurationException;
+use PHPUnit\DbUnit\Database\DefaultConnection;
+use PHPUnit\DbUnit\DataSet\AbstractDataSet;
+use PHPUnit\DbUnit\DataSet\IDataSet;
+use PHPUnit\DbUnit\DataSet\YamlDataSet;
+use PHPUnit\DbUnit\DefaultTester;
+use PHPUnit\DbUnit\Operation\Factory;
 use PunktDe\Behat\Database\Utility\Replacement;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
@@ -49,7 +55,7 @@ class DatabaseManager
                     $databaseName = $credentials['database'];
                 }
 
-                $this->connections[$schema] = new \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection(
+                $this->connections[$schema] = new DefaultConnection(
                     new \PDO(
                         'mysql:dbname=' . $databaseName . ';host=' . $credentials['hostname'] . ';charset=utf8',
                         $credentials['username'],
@@ -66,6 +72,7 @@ class DatabaseManager
      * @param string $schema
      * @throws SuiteConfigurationException
      * @return void
+     * @throws \Exception
      */
     public function importDataSetToDatabase($dataSetFilePath, $schema)
     {
@@ -73,10 +80,10 @@ class DatabaseManager
             throw new SuiteConfigurationException(sprintf('No dataset found at path "%s"', $dataSetFilePath), 1407857990);
         }
 
-        $dataSet = $this->prepareDataSetWithDataReplacement(new \PHPUnit_Extensions_Database_DataSet_YamlDataSet($dataSetFilePath));
+        $dataSet = $this->prepareDataSetWithDataReplacement(new YamlDataSet($dataSetFilePath));
 
-        $tester = new \PHPUnit_Extensions_Database_DefaultTester($this->getConnectionBySchema($schema));
-        $tester->setSetUpOperation(\PHPUnit_Extensions_Database_Operation_Factory::CLEAN_INSERT());
+        $tester = new DefaultTester($this->getConnectionBySchema($schema));
+        $tester->setSetUpOperation(Factory::CLEAN_INSERT());
         $tester->setDataSet($dataSet);
         $tester->onSetUp();
         $tester->closeConnection($this->getConnectionBySchema($schema));
@@ -89,6 +96,7 @@ class DatabaseManager
      * @param string $schema
      * @throws SuiteConfigurationException
      * @return void
+     * @throws \Exception
      */
     public function addDataSetToDatabase($dataSetFilePath, $schema)
     {
@@ -96,10 +104,10 @@ class DatabaseManager
             throw new SuiteConfigurationException(sprintf('No dataset found at path "%s"', $dataSetFilePath), 1410362300);
         }
 
-        $dataSet = $this->prepareDataSetWithDataReplacement(new \PHPUnit_Extensions_Database_DataSet_YamlDataSet($dataSetFilePath));
+        $dataSet = $this->prepareDataSetWithDataReplacement(new YamlDataSet($dataSetFilePath));
 
-        $tester = new \PHPUnit_Extensions_Database_DefaultTester($this->getConnectionBySchema($schema));
-        $tester->setSetUpOperation(\PHPUnit_Extensions_Database_Operation_Factory::INSERT());
+        $tester = new DefaultTester($this->getConnectionBySchema($schema));
+        $tester->setSetUpOperation(Factory::INSERT());
         $tester->setDataSet($dataSet);
         $tester->onSetUp();
         $tester->closeConnection($this->getConnectionBySchema($schema));
@@ -162,7 +170,7 @@ class DatabaseManager
     /**
      * @param string $schema
      * @throws \Exception
-     * @return \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection
+     * @return DefaultConnection
      */
     public function getConnectionBySchema($schema)
     {
@@ -192,8 +200,8 @@ class DatabaseManager
     }
 
     /**
-     * @param $dataSet \PHPUnit_Extensions_Database_DataSet_IDataSet
-     * @return \PHPUnit_Extensions_Database_DataSet_IDataSet
+     * @param $dataSet IDataSet
+     * @return IDataSet
      */
     public function prepareDataSetWithDataReplacement($dataSet)
     {
@@ -201,13 +209,14 @@ class DatabaseManager
     }
 
     /**
-     * @param \PHPUnit_Extensions_Database_DataSet_AbstractDataSet $dataSet
+     * @param AbstractDataSet $dataSet
      * @param string $databaseName
+     * @throws \Exception
      */
     public function insertDataSetIntoDatabase($dataSet, $databaseName)
     {
         $preparedDataSet = $this->prepareDataSetWithDataReplacement($dataSet);
-        $operation = \PHPUnit_Extensions_Database_Operation_Factory::INSERT();
+        $operation = Factory::INSERT();
         $operation->execute($this->getConnectionBySchema($databaseName), $preparedDataSet);
     }
 
@@ -215,6 +224,7 @@ class DatabaseManager
      * @param string $databaseName
      * @param string $tableName
      * @return void
+     * @throws \Exception
      */
     public function truncateDatabaseTable($databaseName, $tableName)
     {

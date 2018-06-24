@@ -6,6 +6,8 @@ namespace PunktDe\Behat\Database\DataSet;
  *  All rights reserved.
  */
 
+use PHPUnit\DbUnit\DataSet;
+
 /**
  * ArrayDataSet
  *
@@ -13,7 +15,7 @@ namespace PunktDe\Behat\Database\DataSet;
  *
  * @see http://phpunit.de/manual/3.7/en/database.html
  */
-class ArrayDataSet extends \PHPUnit_Extensions_Database_DataSet_AbstractDataSet
+class ArrayDataSet extends DataSet\AbstractDataSet
 {
     /**
      * @var array
@@ -28,8 +30,8 @@ class ArrayDataSet extends \PHPUnit_Extensions_Database_DataSet_AbstractDataSet
         foreach ($data as $tableName => $rows) {
             $columns = array_shift($rows);
 
-            $metaData = new \PHPUnit_Extensions_Database_DataSet_DefaultTableMetaData($tableName, $columns);
-            $table = new \PHPUnit_Extensions_Database_DataSet_DefaultTable($metaData);
+            $metaData = new DataSet\DefaultTableMetaData($tableName, $columns);
+            $table = new DataSet\DefaultTable($metaData);
 
             foreach ($rows as $row) {
                 $row = array_combine($columns, $row);
@@ -41,16 +43,16 @@ class ArrayDataSet extends \PHPUnit_Extensions_Database_DataSet_AbstractDataSet
 
     /**
      * @param bool $reverse
-     * @return \PHPUnit_Extensions_Database_DataSet_DefaultTableIterator|\PHPUnit_Extensions_Database_DataSet_ITableIterator
+     * @return DataSet\DefaultTableIterator|DataSet\ITableIterator
      */
     protected function createIterator($reverse = false)
     {
-        return new \PHPUnit_Extensions_Database_DataSet_DefaultTableIterator($this->tables, $reverse);
+        return new DataSet\DefaultTableIterator($this->tables, $reverse);
     }
 
     /**
      * @param string $tableName
-     * @return \PHPUnit_Extensions_Database_DataSet_ITable
+     * @return DataSet\ITable
      * @throws \InvalidArgumentException
      */
     public function getTable($tableName)

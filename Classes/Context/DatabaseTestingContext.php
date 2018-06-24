@@ -12,6 +12,8 @@ use Behat\Gherkin\Node\TableNode;
 use Behat\Testwork\Hook\Scope\BeforeSuiteScope;
 use Behat\Testwork\Suite\Exception\SuiteConfigurationException;
 use Neos\Utility\Files;
+use PHPUnit\DbUnit\DataSet\YamlDataSet;
+use PHPUnit\DbUnit\TestCase;
 use PunktDe\Behat\Database\Utility\ContextSettingsService;
 use PunktDe\Behat\Database\DataSet\ArrayDataSet;
 use PunktDe\Behat\Database\DatabaseManager;
@@ -261,10 +263,10 @@ class DatabaseTestingContext implements Context
         if (!file_exists($expectedDataSetFile) || !is_readable($expectedDataSetFile)) {
             throw new SuiteConfigurationException(sprintf('The given Dataset %s was not found.', $expectedDataSetFile), 1408034776);
         }
-        $expectedDataSet = new \PHPUnit_Extensions_Database_DataSet_YamlDataSet($expectedDataSetFile);
+        $expectedDataSet = new YamlDataSet($expectedDataSetFile);
         $oneLineQueryString = trim(preg_replace('/\s+/', ' ', (string) $queryString));
         $query = $this->databaseManager->getConnectionBySchema($schema)->createQueryTable($table, $oneLineQueryString);
-        \PHPUnit_Extensions_Database_TestCase::assertTablesEqual($expectedDataSet->getTable($table), $query);
+        TestCase::assertTablesEqual($expectedDataSet->getTable($table), $query);
     }
 
     /**
@@ -277,7 +279,7 @@ class DatabaseTestingContext implements Context
 
         $expectedDataSet = $this->databaseManager->prepareDataSetWithDataReplacement(new ArrayDataSet(['table' => $expectedData]));
 
-        \PHPUnit_Extensions_Database_TestCase::assertTablesEqual($expectedDataSet->getTable('table'), $result);
+        TestCase::assertTablesEqual($expectedDataSet->getTable('table'), $result);
     }
 
     /**

@@ -6,6 +6,9 @@ namespace PunktDe\Behat\Database\Utility;
  *  All rights reserved.
  */
 
+use PHPUnit\DbUnit\DataSet\IDataSet;
+use PHPUnit\DbUnit\DataSet\ReplacementDataSet;
+
 class Replacement
 {
     /**
@@ -51,7 +54,7 @@ class Replacement
     public function replaceMarkers($subject)
     {
         $this->subject = $subject;
-        if ($subject instanceof \PHPUnit_Extensions_Database_DataSet_IDataSet) {
+        if ($subject instanceof IDataSet) {
             return $this->removeMarkersFromDataSet();
         }
         if (is_string($subject)) {
@@ -61,11 +64,11 @@ class Replacement
     }
 
     /**
-     * @return \PHPUnit_Extensions_Database_DataSet_IDataSet
+     * @return IDataSet
      */
     protected function removeMarkersFromDataSet()
     {
-        return new \PHPUnit_Extensions_Database_DataSet_ReplacementDataSet($this->subject, $this->getMarkerReplacements());
+        return new ReplacementDataSet($this->subject, $this->getMarkerReplacements());
     }
 
     /**

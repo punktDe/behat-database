@@ -27,6 +27,7 @@ abstract class SqlCommand extends AbstractCommand
 
     /**
      * @return void
+     * @throws \Exception
      */
     public function execute()
     {
@@ -37,6 +38,7 @@ abstract class SqlCommand extends AbstractCommand
 
     /**
      * @return void
+     * @throws \Exception
      */
     protected function prepareCredentials()
     {
