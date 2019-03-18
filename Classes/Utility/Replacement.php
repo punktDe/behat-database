@@ -35,6 +35,7 @@ class Replacement
             '[[[CURRENT_DAY]]]' => date('Ymd'),
             '[[[CURRENT_DAY_TIMESTAMP]]]' => time(),
             '[[[CURRENT_DAY_MIDNIGHT_TIMESTAMP]]]' => strtotime('midnight'),
+            '[[[TOMORROW]]]' => strtotime('tomorrow'),
             '[[[NEXT_DAY_TIMESTAMP]]]' => time() + 86400,
             '[[[PREVIOUS_DAY_TIMESTAMP]]]' => time() - 86400,
             '[[[DOMAIN_NAME]]]' => $this->domainName,
