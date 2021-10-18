@@ -7,12 +7,12 @@ namespace PunktDe\Behat\Database;
  */
 
 use Behat\Testwork\Suite\Exception\SuiteConfigurationException;
-use PHPUnit\DbUnit\Database\DefaultConnection;
-use PHPUnit\DbUnit\DataSet\AbstractDataSet;
-use PHPUnit\DbUnit\DataSet\IDataSet;
-use PHPUnit\DbUnit\DataSet\YamlDataSet;
-use PHPUnit\DbUnit\DefaultTester;
-use PHPUnit\DbUnit\Operation\Factory;
+use PunktDe\Behat\Database\Forked\DbUnit\Database\DefaultConnection;
+use PunktDe\Behat\Database\Forked\DbUnit\DataSet\AbstractDataSet;
+use PunktDe\Behat\Database\Forked\DbUnit\DataSet\IDataSet;
+use PunktDe\Behat\Database\Forked\DbUnit\DataSet\YamlDataSet;
+use PunktDe\Behat\Database\Forked\DbUnit\DefaultTester;
+use PunktDe\Behat\Database\Forked\DbUnit\Operation\Factory;
 use PunktDe\Behat\Database\Utility\Replacement;
 use Symfony\Component\Config\Definition\Exception\Exception;
 

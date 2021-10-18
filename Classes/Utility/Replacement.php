@@ -6,8 +6,8 @@ namespace PunktDe\Behat\Database\Utility;
  *  All rights reserved.
  */
 
-use PHPUnit\DbUnit\DataSet\IDataSet;
-use PHPUnit\DbUnit\DataSet\ReplacementDataSet;
+use PunktDe\Behat\Database\Forked\DbUnit\DataSet\IDataSet;
+use PunktDe\Behat\Database\Forked\DbUnit\DataSet\ReplacementDataSet;
 
 class Replacement
 {

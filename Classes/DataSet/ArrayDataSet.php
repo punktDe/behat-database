@@ -6,7 +6,7 @@ namespace PunktDe\Behat\Database\DataSet;
  *  All rights reserved.
  */
 
-use PHPUnit\DbUnit\DataSet;
+use PunktDe\Behat\Database\Forked\DbUnit\DataSet;
 
 /**
  * ArrayDataSet
