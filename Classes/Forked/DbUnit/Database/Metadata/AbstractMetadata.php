@@ -1,15 +1,17 @@
 <?php
-namespace PunktDe\Testing\Forked\DbUnit\Database\Metadata;
-
 /*
- *  (c) 2020 punkt.de GmbH - Karlsruhe, Germany - https://punkt.de
- *  All rights reserved.
+ * This file is part of DbUnit.
  *
- *  based on DbUnit by Sebastian Bergmann
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
+namespace PunktDe\Behat\Database\Forked\DbUnit\Database\Metadata;
+
 use PDO;
-use PunktDe\Testing\Forked\DbUnit\RuntimeException;
+use PunktDe\Behat\Database\Forked\DbUnit\RuntimeException;
 use ReflectionClass;
 
 /**
@@ -103,7 +105,6 @@ abstract class AbstractMetadata implements Metadata
      * @param string $pdoDriver
      *
      * @return ReflectionClass
-     * @throws \ReflectionException
      */
     public static function registerClassWithDriver($className, $pdoDriver)
     {

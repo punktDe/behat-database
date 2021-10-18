@@ -1,15 +1,17 @@
 <?php
-namespace PunktDe\Testing\Forked\DbUnit\DataSet;
-
 /*
- *  (c) 2020 punkt.de GmbH - Karlsruhe, Germany - https://punkt.de
- *  All rights reserved.
+ * This file is part of DbUnit.
  *
- *  based on DbUnit by Sebastian Bergmann
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
+namespace PunktDe\Behat\Database\Forked\DbUnit\DataSet;
+
 use PDO;
-use PunktDe\Testing\Forked\DbUnit\Database\Connection;
+use PunktDe\Behat\Database\Forked\DbUnit\Database\Connection;
 
 /**
  * Provides the functionality to represent a database table.
@@ -141,14 +143,7 @@ class QueryTable extends AbstractTable
                 // get column names from data
                 $columns = \array_keys($this->data[0]);
             } else {
-                // if no rows found, get column names from database
-                $pdoStatement = $this->databaseConnection->getConnection()->prepare('SELECT column_name FROM information_schema.COLUMNS WHERE table_schema=:schema AND table_name=:table');
-                $pdoStatement->execute([
-                    'table'  => $this->tableName,
-                    'schema' => $this->databaseConnection->getSchema()
-                ]);
-
-                $columns = $pdoStatement->fetchAll(PDO::FETCH_COLUMN, 0);
+                $columns = $this->databaseConnection->getMetaData()->getTableColumns($this->tableName);
             }
             // create metadata
             $this->tableMetaData = new DefaultTableMetadata($this->tableName, $columns);

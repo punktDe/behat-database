@@ -1,12 +1,14 @@
 <?php
-namespace PunktDe\Testing\Forked\DbUnit\Constraint;
-
 /*
- *  (c) 2020 punkt.de GmbH - Karlsruhe, Germany - https://punkt.de
- *  All rights reserved.
+ * This file is part of DbUnit.
  *
- *  based on DbUnit by Sebastian Bergmann
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
+namespace PunktDe\Behat\Database\Forked\DbUnit\Constraint;
 
 use PHPUnit\Framework\Constraint\Constraint;
 
@@ -33,6 +35,7 @@ class TableRowCount extends Constraint
      */
     public function __construct($tableName, $value)
     {
+        parent::__construct();
         $this->tableName = $tableName;
         $this->value     = $value;
     }
@@ -47,7 +50,7 @@ class TableRowCount extends Constraint
      *
      * @return bool
      */
-    protected function matches($other): bool
+    protected function matches($other)
     {
         return $other == $this->value;
     }
@@ -57,7 +60,7 @@ class TableRowCount extends Constraint
      *
      * @return string
      */
-    public function toString(): string
+    public function toString()
     {
         return \sprintf('is equal to expected row count %d', $this->value);
     }

@@ -1,16 +1,18 @@
 <?php
-namespace PunktDe\Testing\Forked\DbUnit;
-
 /*
- *  (c) 2020 punkt.de GmbH - Karlsruhe, Germany - https://punkt.de
- *  All rights reserved.
+ * This file is part of DbUnit.
  *
- *  based on DbUnit by Sebastian Bergmann
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-use PunktDe\Testing\Forked\DbUnit\Database\Connection;
-use PunktDe\Testing\Forked\DbUnit\DataSet\IDataSet;
-use PunktDe\Testing\Forked\DbUnit\Operation\Operation;
+namespace PunktDe\Behat\Database\Forked\DbUnit;
+
+use PunktDe\Behat\Database\Forked\DbUnit\Database\Connection;
+use PunktDe\Behat\Database\Forked\DbUnit\DataSet\IDataSet;
+use PunktDe\Behat\Database\Forked\DbUnit\Operation\Operation;
 
 /**
  * This is the interface for DatabaseTester objects. These objects are used to

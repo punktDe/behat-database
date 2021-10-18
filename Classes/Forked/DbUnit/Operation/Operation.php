@@ -1,15 +1,17 @@
 <?php
-namespace PunktDe\Testing\Forked\DbUnit\Operation;
-
 /*
- *  (c) 2020 punkt.de GmbH - Karlsruhe, Germany - https://punkt.de
- *  All rights reserved.
+ * This file is part of DbUnit.
  *
- *  based on DbUnit by Sebastian Bergmann
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-use PunktDe\Testing\Forked\DbUnit\Database\Connection;
-use PunktDe\Testing\Forked\DbUnit\DataSet\IDataSet;
+namespace PunktDe\Behat\Database\Forked\DbUnit\Operation;
+
+use PunktDe\Behat\Database\Forked\DbUnit\Database\Connection;
+use PunktDe\Behat\Database\Forked\DbUnit\DataSet\IDataSet;
 
 /**
  * Provides a basic interface and functionality for executing database

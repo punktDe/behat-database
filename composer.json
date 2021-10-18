@@ -7,9 +7,6 @@
     "autoload": {
         "psr-4": {
             "PunktDe\\Behat\\Database\\": "Classes"
-        },
-        "classmap": [
-            "LegacyClasses"
-        ]
+        }
     }
 }

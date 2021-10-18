@@ -1,12 +1,14 @@
 <?php
-namespace PunktDe\Testing\Forked\DbUnit\Database\Metadata;
-
 /*
- *  (c) 2020 punkt.de GmbH - Karlsruhe, Germany - https://punkt.de
- *  All rights reserved.
+ * This file is part of DbUnit.
  *
- *  based on DbUnit by Sebastian Bergmann
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
+namespace PunktDe\Behat\Database\Forked\DbUnit\Database\Metadata;
 
 /**
  * Provides functionality to retrieve meta data from an Dblib (SQL Server) database.
@@ -112,7 +114,7 @@ class Dblib extends AbstractMetadata
         }
 
         $keyQuery = "SELECT COL_NAME(ic.OBJECT_ID,ic.column_id) AS ColumnName
-			FROM    sys.indexes AS i INNER JOIN 
+			FROM    sys.indexes AS i INNER JOIN
 				sys.index_columns AS ic ON  i.OBJECT_ID = ic.OBJECT_ID
 						        AND i.index_id = ic.index_id
 			WHERE   i.is_primary_key = 1 AND OBJECT_NAME(ic.OBJECT_ID) = '" . $tableName . "'";

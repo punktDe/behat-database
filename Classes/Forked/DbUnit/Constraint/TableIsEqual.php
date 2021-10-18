@@ -1,15 +1,17 @@
 <?php
-namespace PunktDe\Testing\Forked\DbUnit\Constraint;
-
 /*
- *  (c) 2020 punkt.de GmbH - Karlsruhe, Germany - https://punkt.de
- *  All rights reserved.
+ * This file is part of DbUnit.
  *
- *  based on DbUnit by Sebastian Bergmann
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
-use PunktDe\Testing\Forked\DbUnit\DataSet\ITable;
-use PunktDe\Testing\Forked\DbUnit\Exception\InvalidArgumentException;
+namespace PunktDe\Behat\Database\Forked\DbUnit\Constraint;
+
+use PunktDe\Behat\Database\Forked\DbUnit\DataSet\ITable;
+use PunktDe\Behat\Database\Forked\DbUnit\InvalidArgumentException;
 use PHPUnit\Framework\Constraint\Constraint;
 
 /**

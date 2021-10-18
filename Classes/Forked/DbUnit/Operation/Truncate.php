@@ -1,18 +1,20 @@
 <?php
-namespace PunktDe\Testing\Forked\DbUnit\Operation;
-
 /*
- *  (c) 2020 punkt.de GmbH - Karlsruhe, Germany - https://punkt.de
- *  All rights reserved.
+ * This file is part of DbUnit.
  *
- *  based on DbUnit by Sebastian Bergmann
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
+namespace PunktDe\Behat\Database\Forked\DbUnit\Operation;
 
 use PDO;
 use PDOException;
-use PunktDe\Testing\Forked\DbUnit\Database\Connection;
-use PunktDe\Testing\Forked\DbUnit\DataSet\IDataSet;
-use PunktDe\Testing\Forked\DbUnit\DataSet\ITable;
+use PunktDe\Behat\Database\Forked\DbUnit\Database\Connection;
+use PunktDe\Behat\Database\Forked\DbUnit\DataSet\IDataSet;
+use PunktDe\Behat\Database\Forked\DbUnit\DataSet\ITable;
 
 /**
  * Executes a truncate against all tables in a dataset.
@@ -57,6 +59,7 @@ class Truncate implements Operation
     private function disableForeignKeyChecksForMysql(Connection $connection)
     {
         if ($this->isMysql($connection)) {
+            $connection->getConnection()->query('SET @PHPUNIT_OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS');
             $connection->getConnection()->query('SET FOREIGN_KEY_CHECKS = 0');
         }
     }
@@ -64,7 +67,7 @@ class Truncate implements Operation
     private function enableForeignKeyChecksForMysql(Connection $connection)
     {
         if ($this->isMysql($connection)) {
-            $connection->getConnection()->query('SET FOREIGN_KEY_CHECKS = 1');
+            $connection->getConnection()->query('SET FOREIGN_KEY_CHECKS=@PHPUNIT_OLD_FOREIGN_KEY_CHECKS');
         }
     }
 
